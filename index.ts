@@ -3,8 +3,19 @@ const app = express()
 import { tasksRouter } from './routers/tasksRouter'
 import connect from './db/connect'
 import 'dotenv/config'
+import { notFound } from './middlewares/notFound'
+import { errorMidware } from './middlewares/errors'
 
-const port = 5000
+const getPort = () => {
+    if(process.env.PORT) {
+        return parseInt(process.env.PORT)
+    }
+    else {
+        return 5000
+    }
+}
+
+const port = getPort()
 
 app.use(express.json())
 
@@ -13,6 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/tasks', tasksRouter)
+app.use(notFound)
+app.use(errorMidware)
 
 const start = async (url: string, port: number) => {
     try {

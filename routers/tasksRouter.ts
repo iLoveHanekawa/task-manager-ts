@@ -1,6 +1,6 @@
 import * as express from 'express'
-import { getAllTasks, getTask, createTask, updateTast, deleteTask } from '../controllers/tasksControllers'
+import { getAllTasks, getTask, createTask, updateTask, deleteTask } from '../controllers/tasksControllers'
 export const tasksRouter = express.Router()
 
 tasksRouter.route('/').get(getAllTasks).post(createTask)
-tasksRouter.route('/:id').put(updateTast).delete(deleteTask).get(getTask)
+tasksRouter.route('/:id').patch(updateTask).delete(deleteTask).get(getTask)
